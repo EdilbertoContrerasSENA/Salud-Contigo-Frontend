@@ -1,0 +1,103 @@
+<div class="container mt-4" id="examFormContainer">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-header" style="background-color: #0A1172; color: #fff; border-radius: 5px;">
+            @if(admin){
+              <h5 class="card-title">Formulario Para {{(exam.idexamen > 0)? 'Actualizar': 'Agendar'}} Examen</h5>
+            }
+            @else {
+              <h5 class="card-title">Consultar Examen</h5>
+            }
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmit(examForm)" #examForm="ngForm">
+              <div>
+                <input placeholder="TipoExamen" name="tipoExamen" [(ngModel)]="exam.tipoExamen" class="form-control my-2" #tipoExamen="ngModel" [disabled]="!admin">
+                @if (errors?.tipoExamen) {
+                  <div class="text-danger">{{ errors.tipoExamen }}</div>
+                }
+              </div>
+              <div>
+                <input type="date" placeholder="FechaExamen" name="fechaExamen" [(ngModel)]="exam.fechaExamen" class="form-control my-2" #fechaExamen="ngModel" [disabled]="!admin">
+                @if (errors?.fechaExamen) {
+                  <div class="text-danger">{{ errors.fechaExamen }}</div>
+                }
+              </div>
+              <div>
+                <input type="time" placeholder="HoraExamen" name="horaExamen" [(ngModel)]="exam.horaExamen" class="form-control my-2" #horaExamen="ngModel" [disabled]="!admin">
+                @if (errors?.horaExamen) {
+                  <div class="text-danger">{{ errors.horaExamen }}</div>
+                }
+              </div>
+              <div>
+                <input placeholder="LugarExamen" name="lugarExamen" [(ngModel)]="exam.lugarExamen" class="form-control my-2" #lugarExamen="ngModel" [disabled]="!admin">
+                @if (errors?.lugarExamen) {
+                  <div class="text-danger">{{ errors.lugarExamen }}</div>
+                }
+              </div>
+              @if(exam.idexamen > 0){
+                <div>
+                  <select name="estadoExamen" [(ngModel)]="exam.estadoExamen" class="form-control my-2" #estadoExamen="ngModel" [disabled]="!admin">
+                    <option [ngValue]="null" disabled selected>Selecciona el estado del examen</option>
+                    <option value="Agendado">Agendado</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Reprogramado">Reprogamado</option>
+                    <option value="Ejecutado">Ejecutado</option>
+                    <option value="Cancelado">Cancelado</option>
+                  </select>
+                  @if (errors?.estadoExamen) {
+                    <div class="text-danger">{{ errors.estadoExamen }}</div>
+                  }
+                </div>
+              }
+              <div>
+                <input placeholder="ObservacionExamen" name="observacionExamen" [(ngModel)]="exam.observacionExamen" class="form-control my-2" #observacionExamen="ngModel" [disabled]="!admin">
+                @if (errors?.observacionExamen) {
+                  <div class="text-danger">{{ errors.observacionExamen }}</div>
+                }
+              </div>
+
+              <div>
+                <select name="pacientesIdpaciente" [(ngModel)]="exam.pacientesIdpaciente" class="form-control my-2" #pacientesIdpaciente="ngModel" [disabled]="!admin">
+                  <option [ngValue]="null" disabled selected>Selecciona un paciente</option>
+                  @for (paciente of pacientes; track $index) {
+                    <option [ngValue]="paciente.idpaciente">{{ paciente.nombres + " " + paciente.apellidos }}</option>
+                  }
+                </select>
+                @if (errors?.pacientesIdpaciente) {
+                  <div class="text-danger">{{ errors.pacientesIdpaciente }}</div>
+                }
+              </div>
+              <div>
+                <select name="medicosIdmedico" [(ngModel)]="exam.medicosIdmedico" class="form-control my-2" #medicosIdmedico="ngModel" [disabled]="!admin">
+                  <option [ngValue]="null" disabled selected>Selecciona un médico</option>
+                  @for (medico of medicos; track $index) {
+                    <option [ngValue]="medico.idmedico">{{ medico.nombres + " " + medico.apellidos }}</option>
+                  }
+                </select>
+                @if (errors?.medicosIdmedico) {
+                  <div class="text-danger">{{ errors.medicosIdmedico }}</div>
+                }
+              </div>
+
+              <div>
+                <button type="button" class="btn bg-info m-2" [routerLink]="['/exams/page/0']">Regresar</button>
+                @if(exam.idexamen == 0){
+                  <button type="button" class="btn btn-success m-2" (click)="onClear(examForm)">Limpiar</button>
+                }
+                @if(!admin){
+                  <button type="button" class="btn btn-primary m-2" (click)="downloadPDF()">Descargar</button>
+                }
+                @if(admin){
+                  <button type="submit" class="btn btn-primary m-2">{{(exam.idexamen > 0)? 'Actualizar': 'Crear'}}</button>
+                }
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="container mt-4" id="appointmentFormContainer">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-header" style="background-color: #0A1172; color: #fff; border-radius: 5px;">
+            @if(admin){
+              <h5 class="card-title">Formulario Para {{(appointment.idcita > 0)? 'Actualizar': 'Agendar'}} Cita</h5>
+            }
+            @else {
+              <h5 class="card-title">Consultar Cita</h5>
+            }
+              </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmit(appointmentForm)" #appointmentForm="ngForm">
+              <div>
+                <input placeholder="TipoCita" name="tipoCita" [(ngModel)]="appointment.tipoCita" class="form-control my-2" #tipoCita="ngModel" [disabled]="!admin">
+                @if (errors?.tipoCita) {
+                  <div class="text-danger">{{ errors.tipoCita }}</div>
+                }
+              </div>
+              <div>
+                <input type="date" placeholder="FechaCita" name="fechaCita" [(ngModel)]="appointment.fechaCita" class="form-control my-2" #fechaCita="ngModel" [disabled]="!admin">
+                @if (errors?.fechaCita) {
+                  <div class="text-danger">{{ errors.fechaCita }}</div>
+                }
+              </div>
+              <div>
+                <input type="time" placeholder="HoraCita" name="horaCita" [(ngModel)]="appointment.horaCita" class="form-control my-2" #horaCita="ngModel" [disabled]="!admin">
+                @if (errors?.horaCita) {
+                  <div class="text-danger">{{ errors.horaCita }}</div>
+                }
+              </div>
+              <div>
+                <input placeholder="LugarCita" name="lugarCita" [(ngModel)]="appointment.lugarCita" class="form-control my-2" #lugarCita="ngModel"[disabled]="!admin">
+                @if (errors?.lugarCita) {
+                  <div class="text-danger">{{ errors.lugarCita }}</div>
+                }
+              </div>
+              @if(appointment.idcita > 0) {
+                <div>
+                  <select name="estadoCita" [(ngModel)]="appointment.estadoCita" class="form-control my-2" #estadoCita="ngModel" [disabled]="!admin">
+                    <option [ngValue]="null" disabled selected>Selecciona el estado de la cita</option>
+                    <option value="Agendada">Agendada</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Reprogramada">Reprogamada</option>
+                    <option value="Ejecutada">Ejecutada</option>
+                    <option value="Cancelada">Cancelada</option>
+                  </select>
+                  @if (errors?.estadoCita) {
+                    <div class="text-danger">{{ errors.estadoCita }}</div>
+                  }
+                </div>
+              }
+              <div>
+                <input placeholder="ObservacionCita" name="observacionCita" [(ngModel)]="appointment.observacionCita" class="form-control my-2" #observacionCita="ngModel" [disabled]="!admin">
+                @if (errors?.observacionCita) {
+                  <div class="text-danger">{{ errors.observacionCita }}</div>
+                }
+              </div>
+
+              <div>
+                <select name="pacientesIdpaciente" [(ngModel)]="appointment.pacientesIdpaciente" class="form-control my-2" #pacientesIdpaciente="ngModel" [disabled]="!admin">
+                  <option [ngValue]="null" disabled selected>Selecciona un paciente</option>
+                  @for (paciente of pacientes; track $index) {
+                    <option [ngValue]="paciente.idpaciente">{{ paciente.nombres + " " + paciente.apellidos }}</option>
+                  }
+                </select>
+                @if (errors?.pacientesIdpaciente) {
+                  <div class="text-danger">{{ errors.pacientesIdpaciente }}</div>
+                }
+              </div>
+              <div>
+                <select name="medicosIdmedico" [(ngModel)]="appointment.medicosIdmedico" class="form-control my-2" #medicosIdmedico="ngModel" [disabled]="!admin">
+                  <option [ngValue]="null" disabled selected>Selecciona un médico</option>
+                  @for (medico of medicos; track $index) {
+                    <option [ngValue]="medico.idmedico">{{ medico.nombres + " " + medico.apellidos }}</option>
+                  }
+                </select>
+                @if (errors?.medicosIdmedico) {
+                  <div class="text-danger">{{ errors.medicosIdmedico }}</div>
+                }
+              </div>
+
+              <div>
+                <button type="button" class="btn bg-info m-2" [routerLink]="['/appointments/page/0']">Regresar</button>
+                @if(appointment.idcita == 0){
+                  <button type="button" class="btn btn-success m-2" (click)="onClear(appointmentForm)">Limpiar</button>
+                }
+                @if(!admin){
+                  <button type="button" class="btn btn-primary m-2" (click)="downloadPDF()">Descargar</button>
+                }
+                @if(admin){
+                  <button type="submit" class="btn btn-primary m-2">{{(appointment.idcita > 0)? 'Actualizar': 'Crear'}}</button>
+                }
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

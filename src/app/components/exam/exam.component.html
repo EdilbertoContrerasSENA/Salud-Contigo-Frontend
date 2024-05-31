@@ -1,0 +1,75 @@
+<div class="container-fluid mt-4">
+  <div class="text-white p-3 rounded d-flex justify-content-between align-items-center mb-3" style="background-color: #0A1172; color: #fff; border-radius: 5px;">
+    <h2 class="m-0">{{title}}</h2>
+    @if(admin){
+      <button class="btn btn-primary" [routerLink]="['/exams/create']">Agendar Examen</button>
+    }
+  </div>
+
+  @if(filteredExams.length == 0) {
+    <div class="alert alert-warning">No hay registros en el sistema!</div>
+  } @else {
+    <div class="card">
+      <div class="card-body">
+
+        @if(admin){
+        <div class="input-group mb-1">
+          <input type="text" class="form-control" placeholder="Buscar examen por tipo, lugar o estado..." [(ngModel)]="searchText" (input)="applyFilter()">
+        </div>
+        }
+
+        <div style="max-height: calc(75vh - 200px); overflow-y: auto;">
+          <table class="table table-hover table-striped table-sm">
+            <thead class="thead-dark m-1">
+            <tr>
+              <th>Tipo</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Lugar</th>
+              <th>Estado</th>
+              <th>Paciente</th>
+              <th>Medico</th>
+              <th>Observación</th>
+              @if(!admin){
+                <th>Consultar</th>
+              }
+              @if(admin){
+                <th>Actualizar</th>
+                <th>Eliminar</th>
+              }
+            </tr>
+            </thead>
+            <tbody>
+              @for (exam of filteredExams; track $index) {
+                <tr>
+                  <td>{{exam.tipoExamen}}</td>
+                  <td>{{exam.fechaExamen}}</td>
+                  <td>{{exam.horaExamen}}</td>
+                  <td>{{exam.lugarExamen}}</td>
+                  <td>{{exam.estadoExamen}}</td>
+                  <td>{{getPacienteNombre(exam.pacientesIdpaciente)}}</td>
+                  <td>{{getMedicoNombre(exam.medicosIdmedico)}}</td>
+                  <td>{{exam.observacionExamen}}</td>
+                  @if(!admin){
+                    <td>
+                      <button class="btn btn-info btn-sm" [routerLink]="['/exams/update', exam.idexamen]">Consultar</button>
+                    </td>
+                  }
+                  @if(admin){
+                    <td>
+                      <button class="btn btn-primary btn-sm" [routerLink]="['/exams/update', exam.idexamen]">Actualizar</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-danger btn-sm" (click)="onRemoveExam(exam.idexamen)">Eliminar</button>
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+  <paginator [paginator]="paginator" [url]="url"></paginator>
+</div>

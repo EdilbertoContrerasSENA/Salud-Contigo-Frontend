@@ -1,0 +1,88 @@
+<div class="container mt-4" id="recordFormContainer">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-header" style="background-color: #0A1172; color: #fff; border-radius: 5px;">
+            @if(admin){
+              <h5 class="card-title">Formulario Para {{(record.idhistoria > 0)? 'Actualizar': 'Crear'}} Historia</h5>
+            }
+            @else {
+              <h5 class="card-title">Consultar Historia Clinica</h5>
+            }
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmit(recordForm)" #recordForm="ngForm">
+              <div>
+                <input type="date" placeholder="FechaHistoria" name="fechaHistoria" [(ngModel)]="record.fechaHistoria" class="form-control my-2" #fechaHistoria="ngModel" [disabled]="!admin && !isDoctor">
+                @if (errors?.fechaHistoria) {
+                  <div class="text-danger">{{ errors.fechaHistoria }}</div>
+                }
+              </div>
+              <div>
+                <textarea placeholder="AntecedentesHistoria" name="antecedentesHistoria" [(ngModel)]="record.antecedentesHistoria" class="form-control my-2" #antecedentesHistoria="ngModel" rows="4" [disabled]="!admin && !isDoctor"></textarea>
+                @if (errors?.antecedentesHistoria) {
+                  <div class="text-danger">{{ errors.antecedentesHistoria }}</div>
+                }
+              </div>
+              <div>
+                <textarea placeholder="ExamenesHistoria" name="examenesHistoria" [(ngModel)]="record.examenesHistoria" class="form-control my-2" #examenesHistoria="ngModel" rows="4" [disabled]="!admin && !isDoctor"></textarea>
+                @if (errors?.examenesHistoria) {
+                  <div class="text-danger">{{ errors.examenesHistoria }}</div>
+                }
+              </div>
+              <div>
+                <textarea placeholder="DiagnosticoHistoria" name="diagnosticoHistoria" [(ngModel)]="record.diagnosticoHistoria" class="form-control my-2" #diagnosticoHistoria="ngModel" rows="4" [disabled]="!admin && !isDoctor"></textarea>
+                @if (errors?.diagnosticoHistoria) {
+                  <div class="text-danger">{{ errors.diagnosticoHistoria }}</div>
+                }
+              </div>
+              <div>
+                <textarea placeholder="TratamientoHistoria" name="tratamientoHistoria" [(ngModel)]="record.tratamientoHistoria" class="form-control my-2" #tratamientoHistoria="ngModel" rows="4" [disabled]="!admin && !isDoctor"></textarea>
+                @if (errors?.tratamientoHistoria) {
+                  <div class="text-danger">{{ errors.tratamientoHistoria }}</div>
+                }
+              </div>
+
+              <div>
+                <select name="pacientesIdpaciente" [(ngModel)]="record.pacientesIdpaciente" class="form-control my-2" #pacientesIdpaciente="ngModel" [disabled]="!admin && !isDoctor">
+                  <option [ngValue]="null" disabled selected>Selecciona un paciente</option>
+                  @for (paciente of pacientes; track $index) {
+                    <option [ngValue]="paciente.idpaciente">{{ paciente.nombres + " " + paciente.apellidos }}</option>
+                  }
+                </select>
+                @if (errors?.pacientesIdpaciente) {
+                  <div class="text-danger">{{ errors.pacientesIdpaciente }}</div>
+                }
+              </div>
+              <div>
+                <select name="medicosIdmedico" [(ngModel)]="record.medicosIdmedico" class="form-control my-2" #medicosIdmedico="ngModel" [disabled]="!admin && !isDoctor">
+                  <option [ngValue]="null" disabled selected>Selecciona un médico</option>
+                  @for (medico of medicos; track $index) {
+                    <option [ngValue]="medico.idmedico">{{ medico.nombres + " " + medico.apellidos }}</option>
+                  }
+                </select>
+                @if (errors?.medicosIdmedico) {
+                  <div class="text-danger">{{ errors.medicosIdmedico }}</div>
+                }
+              </div>
+
+              <div>
+                <button type="button" class="btn bg-info m-2" [routerLink]="['/records/page/0']">Regresar</button>
+                @if(record.idhistoria == 0){
+                  <button type="button" class="btn btn-success m-2" (click)="onClear(recordForm)">Limpiar</button>
+                }
+                @if(!admin && !isDoctor){
+                  <button type="button" class="btn btn-primary m-2" (click)="downloadPDF()">Descargar</button>
+                }
+                @if(admin || isDoctor){
+                  <button type="submit" class="btn btn-primary m-2">{{(record.idhistoria > 0)? 'Actualizar': 'Crear'}}</button>
+                }
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<!-- Encabezado -->
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand logo p-0" href="#">
+        <img src="assets/img/logo.png" alt="SALUD Contigo" class="logo-img">
+      </a>
+      <!-- Botón del navbar para dispositivos móviles -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+              aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Contenido del navbar -->
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            @if(!login.isAuth){
+            <a routerLink="/" routerLinkActive="active" class="nav-link active font-weight-bold" style="color: #fff" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+            }
+          </li>
+          <li class="nav-item">
+            @if(login.isAuth){
+            <a routerLink="/home" routerLinkActive="active" class="nav-link font-weight-bold" style="color: #fff" [routerLinkActiveOptions]="{exact: true}">Home</a>
+            }
+          </li>
+          @if(login.isAuth && (admin || isDoctor)){
+          <li class="nav-item">
+            <a routerLink="/patients/page/0" routerLinkActive="active" class="nav-link font-weight-bold" style="color: #fff" [routerLinkActiveOptions]="{exact: true}">Pacientes</a>
+          </li>
+          }
+          @if(login.isAuth && (admin || isPatient)){
+          <li class="nav-item">
+            <a routerLink="/doctors/page/0" routerLinkActive="active" class="nav-link font-weight-bold" style="color: #fff" [routerLinkActiveOptions]="{exact: true}">Médicos</a>
+          </li>
+          }
+          @if(login.isAuth){
+            <li class="nav-item">
+              <a routerLink="/appointments/page/0" routerLinkActive="active" class="nav-link font-weight-bold" style="color: #fff" [routerLinkActiveOptions]="{exact: true}">Citas</a>
+            </li>
+          }
+          @if(login.isAuth){
+            <li class="nav-item">
+              <a routerLink="/exams/page/0" routerLinkActive="active" class="nav-link font-weight-bold" style="color: #fff" [routerLinkActiveOptions]="{exact: true}">Exámenes</a>
+            </li>
+          }
+          @if(login.isAuth){
+            <li class="nav-item">
+              <a routerLink="/records/page/0" routerLinkActive="active" class="nav-link font-weight-bold" style="color: #fff" [routerLinkActiveOptions]="{exact: true}">Historias</a>
+            </li>
+          }
+          @if(login.isAuth && admin){
+            <li class="nav-item">
+              <a routerLink="/auditorias/page/0" routerLinkActive="active" class="nav-link font-weight-bold" style="color: #fff" [routerLinkActiveOptions]="{exact: true}">Auditorias</a>
+            </li>
+          }
+          @if(login.isAuth){
+            <li class="nav-item">
+              @if(isPatient) { <button type="button" class="btn btn-primary">Rol Paciente</button> }
+              @else if (isDoctor) { <button type="button" class="btn btn-primary">Rol Medico</button> }
+              @else { <button type="button" class="btn btn-primary">Rol Administrador</button> }
+            </li>
+          }
+          <li class="nav-item">
+            @if(login.isAuth){
+<!--              {{ login.user.username }}-->
+              <a routerLink="/" routerLinkActive="active" class="nav-link font-weight-bold" style="color: #fff" (click)="handlerLogout()" [routerLinkActiveOptions]="{exact: true}">Cerrar Sesión</a>
+            } @else {
+              <a routerLink="/login" routerLinkActive="active" class="nav-link font-weight-bold" style="color: #fff" (click)="handlerLogout()" [routerLinkActiveOptions]="{exact: true}">Ingresar</a>
+            }
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

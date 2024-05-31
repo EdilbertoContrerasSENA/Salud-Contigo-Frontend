@@ -1,0 +1,68 @@
+<div class="container-fluid mt-4">
+  <div class="text-white p-3 rounded d-flex justify-content-between align-items-center mb-3" style="background-color: #0A1172; color: #fff; border-radius: 5px;">
+    <h2 class="m-0">{{title}}</h2>
+    @if(admin){
+      <button class="btn btn-primary" [routerLink]="['/patients/create']">Crear Paciente</button>
+    }
+  </div>
+
+  @if(patients.length == 0) {
+    <div class="alert alert-warning">No hay registros en el sistema!</div>
+  } @else {
+    <div class="card">
+      <div class="card-body">
+
+        <div class="input-group mb-1">
+          <input type="text" class="form-control" placeholder="Buscar paciente por nombres, apellidos o identificación..." [(ngModel)]="searchText" (input)="applyFilter()">
+        </div>
+
+        <div style="max-height: calc(75vh - 200px); overflow-y: auto;">
+          <table class="table table-hover table-striped table-sm">
+            <thead class="thead-dark m-1">
+            <tr>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              @if(admin){ <th>Tipo Documento</th> }
+              @if(admin){ <th>Numero Documento</th> }
+              <th>Telefono</th>
+              <th>Correo</th>
+              <th>Dirección</th>
+              @if(admin){
+                <th>Actualizar</th>
+                <th>Eliminar</th>
+              }
+            </tr>
+            </thead>
+            <tbody>
+              @for (patient of filteredPatients; track $index) {
+                <tr>
+                  <td>{{patient.nombres}}</td>
+                  <td>{{patient.apellidos}}</td>
+                  @if(admin){ <td>{{patient.tipoDocumento}}</td> }
+                  @if(admin){ <td>{{patient.numeroDocumento}}</td> }
+                  <td>{{patient.telefono}}</td>
+                  <td>{{patient.correo}}</td>
+                  <td>{{patient.direccion}}</td>
+                  @if(admin){
+                    <td>
+                      <button class="btn btn-primary btn-sm" [routerLink]="['/patients/update', patient.idpaciente]">Actualizar</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-danger btn-sm" (click)="onRemovePatient(patient.idpaciente)">Eliminar</button>
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+  <paginator [paginator]="paginator" [url]="url"></paginator>
+</div>
+
+
+
+
+

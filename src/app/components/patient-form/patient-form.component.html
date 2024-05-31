@@ -1,0 +1,121 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-header" style="background-color: #0A1172; color: #fff; border-radius: 5px;">
+            <h5 class="card-title">Formulario Para {{(patient.idpaciente > 0)? 'Actualizar': 'Crear'}} Paciente</h5>
+          </div>
+          <div class="card-body">
+
+            <form (ngSubmit)="onSubmit(patientForm)" #patientForm="ngForm">
+
+              <div>
+                <input placeholder="Nombres" name="nombres" [(ngModel)]="patient.nombres" class="form-control my-2"
+                       #nombres="ngModel">
+                @if (errors?.nombres) {
+                  <div class="text-danger">{{ errors.nombres }}</div>
+                }
+              </div>
+              <div>
+                <input placeholder="Apellidos" name="apellidos" [(ngModel)]="patient.apellidos" class="form-control my-2"
+                       #apellidos="ngModel">
+                @if (errors?.apellidos) {
+                  <div class="text-danger">{{ errors.apellidos }}</div>
+                }
+              </div>
+
+              <div>
+                <select name="tipoDocumento" [(ngModel)]="patient.tipoDocumento" class="form-control my-2" #tipoDocumento="ngModel" required>
+                  <option [ngValue]="undefined" disabled selected>Selecciona el Tipo de Documento</option>
+                  <option value="CC">CC</option>
+                  <option value="TI">TI</option>
+                  <option value="RC">RC</option>
+                  <option value="PP">PP</option>
+                  <option value="CE">CE</option>
+                  <option value="Otro">Otro</option>
+                </select>
+                @if (errors?.tipoDocumento) {
+                  <div class="text-danger">{{ errors.tipoDocumento }}</div>
+                }
+              </div>
+
+              <div>
+                <input placeholder="NumeroDocumento" name="numeroDocumento" [(ngModel)]="patient.numeroDocumento" class="form-control my-2"
+                       #numeroDocumento="ngModel">
+                @if (errors?.numeroDocumento) {
+                  <div class="text-danger">{{ errors.numeroDocumento }}</div>
+                }
+              </div>
+              <div>
+                <input type="date" placeholder="FechaNacimiento" name="fechaNacimiento" [(ngModel)]="patient.fechaNacimiento" class="form-control my-2"
+                       #fechaNacimiento="ngModel">
+                @if (errors?.fechaNacimiento) {
+                  <div class="text-danger">{{ errors.fechaNacimiento }}</div>
+                }
+              </div>
+
+              <div>
+                <select name="sexo" [(ngModel)]="patient.sexo" class="form-control my-2" #sexo="ngModel">
+                  <option [ngValue]="undefined" disabled selected>Selecciona el Sexo</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Otro">Otro</option>
+                </select>
+                @if (errors?.sexo) {
+                  <div class="text-danger">{{ errors.sexo }}</div>
+                }
+              </div>
+
+              <div>
+                <input placeholder="Telefono" name="telefono" [(ngModel)]="patient.telefono" class="form-control my-2"
+                       #telefono="ngModel">
+                @if (errors?.telefono) {
+                  <div class="text-danger">{{ errors.telefono }}</div>
+                }
+              </div>
+              <div>
+                <input placeholder="Correo" name="correo" [(ngModel)]="patient.correo" class="form-control my-2"
+                       type="correo" #correo ="ngModel">
+                @if (errors?.correo) {
+                  <div class="text-danger">{{ errors.correo }}</div>
+                }
+              </div>
+              <div>
+                <input placeholder="Direccion" name="direccion" [(ngModel)]="patient.direccion" class="form-control my-2"
+                       type="direccion" #direccion ="ngModel">
+                @if (errors?.direccion) {
+                  <div class="text-danger">{{ errors.direccion }}</div>
+                }
+              </div>
+              <div>
+                <input placeholder="Ocupacion" name="ocupacion" [(ngModel)]="patient.ocupacion" class="form-control my-2"
+                       type="ocupacion" #ocupacion ="ngModel">
+                @if (errors?.ocupacion) {
+                  <div class="text-danger">{{ errors.ocupacion }}</div>
+                }
+              </div>
+
+              <div>
+                <button type="button" class="btn bg-info m-2" [routerLink]="['/patients/page/0']">
+                  Regresar
+                </button>
+
+                @if(patient.idpaciente == 0){
+                  <button type="button" class="btn btn-success m-2" (click)="onClear(patientForm)">
+                    Limpiar
+                  </button>
+                }
+
+                <button type="submit" class="btn btn-primary m-2">
+                  {{(patient.idpaciente > 0)? 'Actualizar': 'Crear'}}
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

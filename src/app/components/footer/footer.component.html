@@ -1,0 +1,84 @@
+<!-- footer.component.html -->
+<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+
+  @if(!login.isAuth){
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start" style="background-color: #ffffff">
+      <!-- Grid row -->
+      <div class="row">
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-5 col-xl-4 mx-auto mb-1 mt-2">
+          <!-- Content -->
+          <h6 class="fw-bolder mb-3" style="color: #FE439F;">
+            <i class="fas fa-gem me-3"></i>Acerca de
+          </h6>
+          <p>Somos una clínica comprometida con tu bienestar. Ofrecemos servicios acorde a tus necesidades.</p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-1 mt-2">
+          <!-- Links -->
+          <h6 class="fw-bold mb-3" style="color: #FE439F;">Productos y Servicios</h6>
+          <p class="mb-1">
+            <a href="#" class="text-reset" (click)="openModal('citasMedicasModal')">Citas Médicas</a>
+          </p>
+          <p class="mb-1">
+            <a href="#" class="text-reset" (click)="openModal('examenesMedicosModal')">Exámenes Médicos</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-5 col-lg-4 col-xl-5 mx-auto mb-md-0 mb-1 mt-2">
+          <!-- Links -->
+          <h6 class="fw-bold mb-3" style="color: #FE439F;">Contacto</h6>
+          <p class="mb-1">Email: info&#64;saludcontigo.com</p>
+          <p class="mb-1">Teléfono: (123) 456-7890</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+  }
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: #0073e6; color: #fff;">
+    © 2024 Copyright:
+    <a class="text-reset fw-bold" style="color: #fff;" href="/#">SALUD Contigo - Todos los derechos reservados</a>
+  </div>
+  <!-- Copyright -->
+
+  <!-- Modales -->
+  <div id="citasMedicasModal" class="modal" [class.show]="modalCitasMedicas">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal('citasMedicasModal')">&times;</span>
+      <h5>Citas Médicas</h5>
+      <p>Ofrecemos una variedad de citas médicas para atender tus necesidades de salud:</p>
+      <ul>
+        <li><strong>Citas Generales:</strong> Consulta con médicos generales para diagnósticos y tratamientos básicos.</li>
+        <li><strong>Citas Especializadas:</strong> Consulta con especialistas en diferentes áreas como cardiología, dermatología, etc.</li>
+        <li><strong>Citas de Urgencia:</strong> Atención inmediata para problemas de salud urgentes.</li>
+        <li><strong>Citas de Seguimiento:</strong> Consultas para revisar el progreso de tratamientos en curso.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="examenesMedicosModal" class="modal" [class.show]="modalExamenesMedicos">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal('examenesMedicosModal')">&times;</span>
+      <h5>Exámenes Médicos</h5>
+      <p>Ofrecemos una variedad de exámenes médicos para garantizar tu salud:</p>
+      <ul>
+        <li><strong>Exámenes de Sangre:</strong> Incluyen análisis completos de sangre para detectar diversas condiciones.</li>
+        <li><strong>Exámenes de Imágenes:</strong> Rayos X, ecografías, resonancias magnéticas y tomografías.</li>
+        <li><strong>Exámenes de Diagnóstico:</strong> Pruebas específicas para detectar enfermedades como diabetes, colesterol.</li>
+        <li><strong>Exámenes de Función:</strong> Pruebas para evaluar el funcionamiento de órganos como el hígado, riñones, entre otros.</li>
+      </ul>
+    </div>
+  </div>
+
+</footer>

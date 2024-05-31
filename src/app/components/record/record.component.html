@@ -1,0 +1,73 @@
+<div class="container-fluid mt-4">
+  <div class="text-white p-3 rounded d-flex justify-content-between align-items-center mb-3" style="background-color: #0A1172; color: #fff; border-radius: 5px;">
+    <h2 class="m-0">{{title}}</h2>
+    @if(admin || isDoctor){
+      <button class="btn btn-primary" [routerLink]="['/records/create']">Crear Historia</button>
+    }
+  </div>
+
+  @if(filteredRecords.length == 0) {
+    <div class="alert alert-warning">No hay registros en el sistema!</div>
+  } @else {
+    <div class="card">
+      <div class="card-body">
+
+        @if(admin){
+        <div class="input-group mb-1">
+          <input type="text" class="form-control" placeholder="Buscar historia por antecedentes, examenes, diagnostico o tratamiento..." [(ngModel)]="searchText" (input)="applyFilter()">
+        </div>
+        }
+
+        <div style="max-height: calc(75vh - 200px); overflow-y: auto;">
+          <table class="table table-hover table-striped table-sm">
+            <thead class="thead-dark m-1">
+            <tr>
+              <th>Fecha</th>
+              <th>Antecedentes</th>
+              <th>Examenes</th>
+              <th>Diagnostico</th>
+              <th>Tratamiento</th>
+              <th>Paciente</th>
+              <th>Medico</th>
+              @if(!admin && !isDoctor){
+                <th>Consultar</th>
+              }
+              @if(admin || isDoctor){
+                <th>Actualizar</th>
+                <th>Eliminar</th>
+              }
+            </tr>
+            </thead>
+            <tbody>
+              @for (record of filteredRecords; track $index) {
+                <tr>
+                  <td>{{record.fechaHistoria}}</td>
+                  <td>{{record.antecedentesHistoria}}</td>
+                  <td>{{record.examenesHistoria}}</td>
+                  <td>{{record.diagnosticoHistoria}}</td>
+                  <td>{{record.tratamientoHistoria}}</td>
+                  <td>{{getPacienteNombre(record.pacientesIdpaciente)}}</td>
+                  <td>{{getMedicoNombre(record.medicosIdmedico)}}</td>
+                  @if(!admin && !isDoctor){
+                    <td>
+                      <button class="btn btn-info btn-sm" [routerLink]="['/records/update', record.idhistoria]">Consultar</button>
+                    </td>
+                  }
+                  @if(admin || isDoctor) {
+                    <td>
+                      <button class="btn btn-primary btn-sm" [routerLink]="['/records/update', record.idhistoria]">Actualizar</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-danger btn-sm" (click)="onRemoveRecord(record.idhistoria)">Eliminar</button>
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+  <paginator [paginator]="paginator" [url]="url"></paginator>
+</div>

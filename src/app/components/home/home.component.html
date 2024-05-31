@@ -1,0 +1,84 @@
+<!-- Home Content -->
+<div class="container home my-4" style="background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); padding: 20px;">
+  <h2 class="text-center py-3" style="background-color: #0A1172; color: #fff; border-radius: 5px;">{{title}}</h2>
+  <br>
+  <!-- Cuadrícula de elementos -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+
+    @if(login.isAuth && (admin || isDoctor)) {
+      <!-- Elemento 1: Gestión de Pacientes -->
+      <div class="col">
+        <div class="card h-100">
+          <img src="assets/img/reportes.png" class="card-img-top" alt="Citas Psicológicas">
+          <div class="card-body d-flex flex-column">
+            @if(admin){
+            <h5 class="card-title">Gestión de Pacientes</h5>
+            <p class="card-text">Gestione la información de los pacientes</p>
+            }
+            @else {
+              <h5 class="card-title">Revisión de Pacientes</h5>
+              <p class="card-text">Revise la información de los pacientes</p>
+            }
+            <a routerLink="/patients/page/0" class="btn btn-primary mt-auto stretched-link">Pacientes</a>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if(login.isAuth && (admin || isPatient)){
+    <!-- Elemento 2: Gestión de Médicos -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="assets/img/reportes.png" class="card-img-top" alt="Reportes">
+        <div class="card-body d-flex flex-column">
+          @if(admin){
+            <h5 class="card-title">Gestión de Médicos</h5>
+            <p class="card-text">Gestione la información de los médicos</p>
+          }
+          @else{
+            <h5 class="card-title">Revisión de Médicos</h5>
+            <p class="card-text">Revise la información de los médicos</p>
+          }
+          <a routerLink="/doctors/page/0" class="btn btn-primary mt-auto stretched-link">Médicos</a>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Elemento 3: Citas Médicas -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="assets/img/citas1.png" class="card-img-top" alt="Citas Médicas">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Citas Médicas</h5>
+          <p class="card-text">Agende o consulte sus citas médicas</p>
+          <a routerLink="/appointments/page/0" class="btn btn-primary mt-auto stretched-link">Citas Médicas</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Elemento 4: Exámenes Médicos -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="assets/img/laboratorios.png" class="card-img-top" alt="Exámenes">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Exámenes Médicos</h5>
+          <p class="card-text">Agende o consulte sus exámenes de laboratorio</p>
+          <a routerLink="/exams/page/0" class="btn btn-primary mt-auto stretched-link">Exámenes</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Elemento 5: Reportes -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="assets/img/reportes.png" class="card-img-top" alt="Reportes">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Historias Clinicas</h5>
+          <p class="card-text">Agende o consulte sus historias clinicas</p>
+          <a routerLink="/records/page/0" class="btn btn-primary mt-auto stretched-link">Historias</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
